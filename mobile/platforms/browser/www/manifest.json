@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "GGJ2018Mobile",
+  "short_name": "GGJ2018Mobile",
+  "version": "gg.kodo.ggj2018mobile",
+  "description": "Hello World sample application that responds to the deviceready event.",
+  "author": "PhoneGap Team",
+  "icons": [],
+  "start_url": "index.html"
+}
