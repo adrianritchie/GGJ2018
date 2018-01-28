@@ -6,6 +6,8 @@ var HomeView = function(ws) {
         ws.addEventListener('open', this.wsConnected);
         ws.addEventListener('close', this.wsDisconnected);
     };
+
+    this.start = function() {};
   
     this.render = function() {
         this.$el.html(this.template());
@@ -31,5 +33,4 @@ var HomeView = function(ws) {
   
     this.initialize();
   
-  }
-  
+  }; 

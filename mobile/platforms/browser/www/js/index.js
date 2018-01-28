@@ -6,18 +6,24 @@ var app = {
         HomeView.prototype.template = Handlebars.compile($("#home-tpl").html());
         StartView.prototype.template = Handlebars.compile($('#start-tpl').html());
         MessageView.prototype.template = Handlebars.compile($("#message-tpl").html());
+        GameOverView.prototype.template = Handlebars.compile($("#gameover-tpl").html());
 
-        
-        this.$ws = new WebSocket("ws://10.120.0.65/");
+        this.$ws = new WebSocket("ws://10.120.0.82/");
 
-        router.addRoute('', function() { $('.app').html(new HomeView(app.$ws).render().$el); });
-        router.addRoute('start', function() { $('.app').html(new StartView(app.$ws).render().$el); });
-        router.addRoute('message', function() { $('.app').html(new MessageView(app.$ws).render().$el); });
+        router.addRoute('', function() { app.showView(new HomeView(app.$ws)); });
+        router.addRoute('start', function() { app.showView(new StartView(app.$ws)); });
+        router.addRoute('message', function() { app.showView(new MessageView(app.$ws)); });
+        router.addRoute('gameover', function() { app.showView(new GameOverView(app.$ws)); });
         router.start();
 
         this.bindEvents();
     },
     // Bind Event Listeners
+
+    showView: function(view) {
+        $('.app').html(view.render().$el);
+        view.start(); 
+    },
     
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.

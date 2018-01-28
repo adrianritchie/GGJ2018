@@ -1,4 +1,4 @@
-var StartView = function(ws) {
+var GameOverView = function(ws) {
 
     this.initialize = function() {
         this.$el = $('<div/>');
@@ -9,7 +9,9 @@ var StartView = function(ws) {
         return this;
     };
 
-    this.start = function() {};
+    this.start = function() {
+        //$("#restart").unbind("click").bind("click", function() { router.load(''); } );
+    };
 
     this.messageReceived = function() {
     };

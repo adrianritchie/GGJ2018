@@ -97,9 +97,17 @@ h1 {
     display:none;
 }
 
-.received a {
+.received a, .continue a {
     text-decoration: none;
     color:#FFFFFF;
+}
+
+.event.continue {
+    background-color:#4B946A;
+}
+
+img.explosion {
+    margin: -100% -50% 0 -50%;
 }
 
 @keyframes fade {

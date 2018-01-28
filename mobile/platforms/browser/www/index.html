@@ -40,20 +40,36 @@
         <h1>Incoming message:</h1>
         <p>You will need to follow the instructions before the time runs out in order to defuse the bomb.</p>
         <p>Failure to follow the instructions may result in an unfortunate incident!</p>
-        <a href='#message'>Go!</a>
+        <p class="event continue">
+            <a href='#message'>Go!</a>
+        </p>
     </script>
 
     <script id="message-tpl" type="text/template">
         <h1>Incoming message:</h1>
         <p>
-            You will need to follow the instructions before the time runs out in order to defuse the bomb!
+            You need to toggle the blue switch!
         </p>
         <div style="width: 216px; height: 126px; position: relative; background: transparent url(img/plexiglas.png) no-repeat top left">
             <div style="position: absolute; left: 38px; top: 33px; width: 120px; height: 34px">
               <canvas id="display" width="120" height="34"></canvas>
             </div>
         </div>
-        <p>Response: <span id="response"></span>
+        <p>Errors: <span id="errors"></span></p>
+        <p>Messages: <span id="messages"></span></p>
+        <p class="event continue">
+            <a id="go-again">Restart</a>
+        </p>
+    </script>
+
+    <script id="gameover-tpl" type="text/template">
+        <p>
+            <img src="img/explosion.png" class="explosion" />
+        </p>
+        <h1>Game Over!</h1>
+        <p class="event continue">
+            <a id="restart" href="#">Try again &rarr;</a>
+        </p>
     </script>
 
     <div class="app"></div>
@@ -65,6 +81,7 @@
     <script type="text/javascript" src="js/views/HomeView.js"></script>
     <script type="text/javascript" src="js/views/StartView.js"></script>
     <script type="text/javascript" src="js/views/MessageView.js"></script>
+    <script type="text/javascript" src="js/views/GameOverView.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
