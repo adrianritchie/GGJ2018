@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <ESPmDNS.h>
 #include <WebSocketServer.h>
 #include <U8x8lib.h>
 #include <Adafruit_NeoPixel.h>
@@ -45,12 +46,25 @@ void setup() {
  
   WiFi.begin(ssid, password);
 
-  while (!WiFi.isConnected()) {}
+  while (!WiFi.isConnected()) {
+    Serial.print('.');
+    delay(100);
+  }
   Serial.println(WiFi.localIP());
  
+  if (!MDNS.begin("da_bomb")) {
+      Serial.println("Error setting up MDNS responder!");
+      while(1){
+          delay(1000);
+      }
+  }
+
+
   server.begin();
   delay(100);
 
+  // Add service to MDNS-SD
+  MDNS.addService("http", "tcp", 80);
 
   u8x8.begin();
   u8x8.setFont(u8x8_font_chroma48medium8_r);
@@ -170,9 +184,10 @@ void loop() {
  
   }
 
-   Serial.println("The client disconnected");
-    u8x8.setCursor(0, 4);
-    u8x8.print("Not connected");
+  Serial.println("The client disconnected");
+  u8x8.setCursor(0, 4);
+  u8x8.print("Not connected");
+  Serial.println(WiFi.localIP());    
  
   delay(100);
 }

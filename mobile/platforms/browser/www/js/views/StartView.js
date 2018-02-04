@@ -1,4 +1,4 @@
-var StartView = function(ws) {
+var StartView = function() {
 
     this.initialize = function() {
         this.$el = $('<div/>');
@@ -9,9 +9,7 @@ var StartView = function(ws) {
         return this;
     };
 
-    this.start = function() {};
-
-    this.messageReceived = function() {
+    this.start = function() {
     };
   
     this.initialize();

@@ -350,35 +350,11 @@ module.exports = [
     "runs": true
   },
   {
-    "id": "cordova-plugin-media.MediaError",
-    "file": "plugins/cordova-plugin-media/www/MediaError.js",
-    "pluginId": "cordova-plugin-media",
+    "id": "cordova-plugin-zeroconf.ZeroConf",
+    "file": "plugins/cordova-plugin-zeroconf/www/zeroconf.js",
+    "pluginId": "cordova-plugin-zeroconf",
     "clobbers": [
-      "window.MediaError"
-    ]
-  },
-  {
-    "id": "cordova-plugin-media.Media",
-    "file": "plugins/cordova-plugin-media/www/Media.js",
-    "pluginId": "cordova-plugin-media",
-    "clobbers": [
-      "window.Media"
-    ]
-  },
-  {
-    "id": "cordova-plugin-file-transfer.FileTransferError",
-    "file": "plugins/cordova-plugin-file-transfer/www/FileTransferError.js",
-    "pluginId": "cordova-plugin-file-transfer",
-    "clobbers": [
-      "window.FileTransferError"
-    ]
-  },
-  {
-    "id": "cordova-plugin-file-transfer.FileTransfer",
-    "file": "plugins/cordova-plugin-file-transfer/www/FileTransfer.js",
-    "pluginId": "cordova-plugin-file-transfer",
-    "clobbers": [
-      "window.FileTransfer"
+      "cordova.plugins.zeroconf"
     ]
   }
 ];
@@ -394,8 +370,8 @@ module.exports.metadata =
   "cordova-plugin-device-orientation": "1.0.7",
   "cordova-plugin-dialogs": "1.2.1",
   "cordova-plugin-file": "6.0.1",
-  "cordova-plugin-media": "2.2.0",
-  "cordova-plugin-file-transfer": "1.5.1"
+  "cordova-plugin-add-swift-support": "1.7.1",
+  "cordova-plugin-zeroconf": "1.3.1"
 };
 // BOTTOM OF METADATA
 });

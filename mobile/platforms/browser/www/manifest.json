@@ -1,11 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "GGJ2018Mobile",
-  "short_name": "GGJ2018Mobile",
+  "name": "Call the Bomb Squad!",
+  "short_name": "Call the Bomb Squad!",
   "version": "gg.kodo.ggj2018mobile",
-  "description": "Hello World sample application that responds to the deviceready event.",
-  "author": "PhoneGap Team",
+  "description": "App required for playing Call the Bomb Squad!",
+  "author": "The Bomb Squad @ Kodo",
   "icons": [],
   "start_url": "index.html"
 }

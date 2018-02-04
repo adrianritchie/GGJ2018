@@ -1,0 +1,97 @@
+{
+  "_args": [
+    [
+      "cordova-plugin-zeroconf",
+      "/home/adrianritchie/Documents/PlatformIO/Projects/GGJ2018/mobile"
+    ]
+  ],
+  "_from": "cordova-plugin-zeroconf@latest",
+  "_id": "cordova-plugin-zeroconf@1.3.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/cordova-plugin-zeroconf",
+  "_nodeVersion": "8.9.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-zeroconf-1.3.1.tgz_1514900837342_0.6156872007995844"
+  },
+  "_npmUser": {
+    "email": "support@becvertprod.fr",
+    "name": "becvert"
+  },
+  "_npmVersion": "5.5.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "cordova-plugin-zeroconf",
+    "raw": "cordova-plugin-zeroconf",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-zeroconf/-/cordova-plugin-zeroconf-1.3.1.tgz",
+  "_shasum": "fcd37469ac1602c106006751013a72a6524f0448",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-zeroconf",
+  "_where": "/home/adrianritchie/Documents/PlatformIO/Projects/GGJ2018/mobile",
+  "author": {
+    "name": "Sylvain Bréjeon",
+    "url": "https://github.com/becvert"
+  },
+  "bugs": {
+    "url": "https://github.com/becvert/cordova-plugin-zeroconf/issues"
+  },
+  "contributors": {
+    "name": "Eric McNiece",
+    "url": "https://github.com/emcniece"
+  },
+  "cordova": {
+    "id": "cordova-plugin-zeroconf",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova ZeroConf plugin",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-qZbSflfB40gSJBEm5gswcFsK5V/wL80S3OHigQrob/nZvy0eaHrIcHEYLlhgPVOY07ATO6V6Ddl1TDaV3DDmoA==",
+    "shasum": "fcd37469ac1602c106006751013a72a6524f0448",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-zeroconf/-/cordova-plugin-zeroconf-1.3.1.tgz"
+  },
+  "gitHead": "94f94921765f7a39a30c7482dc1a7114ff56b665",
+  "homepage": "https://github.com/becvert/cordova-plugin-zeroconf",
+  "keywords": [
+    "bonjour",
+    "cordova",
+    "cordova-android",
+    "cordova-ios",
+    "discovery",
+    "ecosystem:cordova",
+    "mdns",
+    "network",
+    "plugin",
+    "service",
+    "zeroconf"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "becvert",
+      "email": "support@becvertprod.com"
+    }
+  ],
+  "name": "cordova-plugin-zeroconf",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becvert/cordova-plugin-zeroconf.git"
+  },
+  "version": "1.3.1"
+}

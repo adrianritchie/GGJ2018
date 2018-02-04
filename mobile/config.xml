@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="gg.kodo.ggj2018mobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>GGJ2018Mobile</name>
+    <name>Call the Bomb Squad!</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        App required for playing Call the Bomb Squad!
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="bombsquad@kodo.ggg" href="http://bombsquad.kodo.gg">
+        The Bomb Squad @ Kodo
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
@@ -112,4 +112,5 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <plugin name="cordova-plugin-file" spec="~6.0.1" />
+    <plugin name="cordova-plugin-zeroconf" spec="~1.3.1" />
 </widget>

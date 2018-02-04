@@ -26,12 +26,15 @@
         <param name="onload" value="true" />
     </feature>
     <allow-navigation href="cdvfile:*" />
-    <name>GGJ2018Mobile</name>
+    <feature name="ZeroConf">
+        <param name="android-package" value="net.becvert.cordova.ZeroConf" />
+    </feature>
+    <name>Call the Bomb Squad!</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        App required for playing Call the Bomb Squad!
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="bombsquad@kodo.ggg" href="http://bombsquad.kodo.gg">
+        The Bomb Squad @ Kodo
     </author>
     <content src="index.html" />
     <access origin="*" />

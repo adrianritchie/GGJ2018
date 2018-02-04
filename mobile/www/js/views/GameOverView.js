@@ -10,11 +10,19 @@ var GameOverView = function(ws) {
     };
 
     this.start = function() {
-        //$("#restart").unbind("click").bind("click", function() { router.load(''); } );
+        $('.continue').off('click', '#restart');
+        $('.continue').on("click", '#restart', this.restart );
     };
 
-    this.messageReceived = function() {
-    };
-  
+    this.restart = function(eventObject) {
+        eventObject.preventDefault();
+        if (app.$ws.readyState != 1) {
+            router.load('');
+        }
+        else {
+            router.load('start');
+        }
+    }
+
     this.initialize();
 }

@@ -1,5 +1,5 @@
 
-var MessageView = function(ws) {
+var MessageView = function() {
 
     this.state = {
         control : 's1',
@@ -13,7 +13,7 @@ var MessageView = function(ws) {
 
     this.initialize = function() {
         this.$el = $('<div/>');
-        this.$ws.addEventListener('message', this.messageReceived.bind(this), false);
+        app.$ws.addEventListener('message', this.messageReceived.bind(this), false);
     };
   
     this.render = function() {
@@ -44,13 +44,13 @@ var MessageView = function(ws) {
 
 
     this.sendInstructions = function() {
-        if (this.$ws.readyState != 1) {
+        if (app.$ws.readyState != 1) {
             router.load('');
         }
         var message = 't'+Math.round(Math.random()*10);
         console.log(message);
 
-        this.$ws.send(message);
+        app.$ws.send(message);
         this.state.initialising = true;
         this.state.completed = false;
     };
@@ -99,6 +99,5 @@ var MessageView = function(ws) {
         }
     };
   
-    this.$ws = ws;
     this.initialize();
 };

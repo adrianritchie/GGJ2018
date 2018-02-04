@@ -437,7 +437,9 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "2.1.0",
     "cordova-plugin-globalization": "1.0.9",
     "cordova-plugin-inappbrowser": "1.3.0",
-    "cordova-plugin-file": "6.0.1"
+    "cordova-plugin-file": "6.0.1",
+    "cordova-plugin-add-swift-support": "1.7.1",
+    "cordova-plugin-zeroconf": "1.3.1"
 }
 // BOTTOM OF METADATA
 });
