@@ -2,5 +2,9 @@
     "terminal.integrated.env.osx": {
         "PATH": "/Users/adrianritchie/.platformio/penv/bin:/Users/adrianritchie/.platformio/penv:/Library/Frameworks/Python.framework/Versions/3.5/bin:/opt/local/bin:/opt/local/sbin:/Users/adrianritchie/.rvm/gems/ruby-2.2.2/bin:/Users/adrianritchie/.rvm/gems/ruby-2.2.2@global/bin:/Users/adrianritchie/.rvm/rubies/ruby-2.2.2/bin:/usr/local/bin:~/Library/Android/sdk/platform-tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/adrianritchie/.rvm/bin",
         "PLATFORMIO_CALLER": "vscode"
+    },
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/adrianritchie/.platformio/penv/bin:/home/adrianritchie/.platformio/penv:/home/adrianritchie/bin:/home/adrianritchie/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/usr/local/android-sdk-linux/:/usr/local/android-sdk-linux/tools:/usr/local/android-sdk-linux/platform-tools:/usr/local/android-sdk-linux/build-tools",
+        "PLATFORMIO_CALLER": "vscode"
     }
 }

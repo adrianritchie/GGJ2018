@@ -8,7 +8,7 @@ var app = {
         MessageView.prototype.template = Handlebars.compile($("#message-tpl").html());
         GameOverView.prototype.template = Handlebars.compile($("#gameover-tpl").html());
 
-        this.$ws = new WebSocket("ws://10.120.0.82/");
+        this.$ws = new WebSocket("ws://192.168.2.130/");
 
         router.addRoute('', function() { app.showView(new HomeView(app.$ws)); });
         router.addRoute('start', function() { app.showView(new StartView(app.$ws)); });

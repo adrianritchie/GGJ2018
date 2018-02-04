@@ -1,0 +1,4 @@
+#Sun Feb 04 16:27:33 GMT 2018
+base.0=/home/adrianritchie/Documents/PlatformIO/Projects/GGJ2018/mobile/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
+renamed.0=classes.dex
+file.0=/home/adrianritchie/Documents/PlatformIO/Projects/GGJ2018/mobile/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex

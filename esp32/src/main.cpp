@@ -16,8 +16,8 @@
 WiFiServer server(80);
 WebSocketServer webSocketServer;
  
-const char *ssid = "Digital GH Members";
-const char *password = "DigiGHmembers1";
+const char *ssid = "gringod-wifi";
+const char *password = "helloworldthisismyworld";
  
 
 U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
