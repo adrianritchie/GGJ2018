@@ -1,4 +1,4 @@
-var HomeView = function(ws) {
+var HomeView = function() {
 
     this.initialize = function() {
         this.$el = $('<div/>');
@@ -10,7 +10,6 @@ var HomeView = function(ws) {
     };
 
     this.start = function() {
-        debugger;
     };
 
     this.messageReceived = function() {

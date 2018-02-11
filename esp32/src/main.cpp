@@ -1,9 +1,9 @@
 #include <WiFi.h>
-#include <ESPmDNS.h>
-#include <WebSocketServer.h>
+#include <WebSocketsServer.h>
 #include <U8x8lib.h>
 #include <Adafruit_NeoPixel.h>
 #include <BlynkSimpleEsp32.h>
+
  
 #define NEOPIXEL_DATA_PIN 18
 #define NEOPIXEL_NUM_LEDS 60
@@ -16,8 +16,7 @@
 
 
 
-WiFiServer server(80);
-WebSocketServer webSocketServer;
+WebSocketsServer webSocket = WebSocketsServer(80);
  
 const char auth[] = "091b2133b443485dbb2e71686f361c6d";
 
@@ -40,6 +39,53 @@ uint8_t messagesReceived = 0;
 bool playing = false;
 bool initialising = false;
 
+uint8_t socketCount = 0;
+
+BlynkTimer timer;
+void timerEvent() {
+  Serial.printf("Connected sockets: %u\n", socketCount);
+}
+
+void processMessage (char * message);
+
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+
+    switch(type) {
+        case WStype_DISCONNECTED:
+            Serial.printf("[%u] Disconnected!\n", num);
+            socketCount--;
+            break;
+        case WStype_CONNECTED:
+            {
+                IPAddress ip = webSocket.remoteIP(num);
+                Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+
+        				// send message to client
+				        webSocket.sendTXT(num, "Connected");
+                socketCount++;
+            }
+            break;
+        case WStype_TEXT:
+            Serial.printf("[%u] get Text: %s\n", num, payload);
+            processMessage((char*)payload);
+
+            // send message to client
+            // webSocket.sendTXT(num, "message here");
+
+            // send data to all connected clients
+            // webSocket.broadcastTXT("message here");
+            break;
+        case WStype_BIN:
+            Serial.printf("[%u] get binary length: %u\n", num, length);
+            //hexdump(payload, length);
+
+            // send message to client
+            // webSocket.sendBIN(num, payload, length);
+            break;
+    }
+
+}
+
 
 void setup() {
  
@@ -58,26 +104,16 @@ void setup() {
   }
   Serial.println(WiFi.localIP());
  
-    if (!MDNS.begin("esp32")) {
-        Serial.println("Error setting up MDNS responder!");
-        while(1) {
-            delay(1000);
-        }
-    }
-    Serial.println("mDNS responder started");
-
-// Setup Blynk
+  // Setup Blynk
   Blynk.config(auth);
   while (Blynk.connect() == false) {
   }
   lcd.print(0, 0, "IP Address:");
   lcd.print(0, 1, WiFi.localIP().toString());
 
-  server.begin();
-  delay(100);
+  webSocket.begin();
+  webSocket.onEvent(webSocketEvent);
 
-    // Add service to MDNS-SD
-    MDNS.addService("http", "tcp", 80);
 
   u8x8.begin();
   u8x8.setFont(u8x8_font_chroma48medium8_r);
@@ -88,6 +124,8 @@ void setup() {
   pixels.begin(); // This initializes the NeoPixel library.
   pixels.setBrightness(50);
   timeLimit = 0;
+
+  timer.setInterval(5000L, timerEvent);
 }
 
 void updatePixels() { 
@@ -101,10 +139,10 @@ void updatePixels() {
 
       char output[40];
       sprintf(output, "r:%d", timeLimit - elapsed);
-      webSocketServer.sendData(output);
+      webSocket.broadcastTXT(output);
     }
     else {
-      webSocketServer.sendData("r:0");
+      webSocket.broadcastTXT("r:0");
       playing = false;
       lit = 0;
     }
@@ -126,22 +164,19 @@ void updatePixels() {
   portENABLE_INTERRUPTS();
 }
 
-void processMessage(String data) {
+void processMessage(char * message) {
   u8x8.setCursor(0, 2);
-  u8x8.print(data.c_str());
-        
-  Serial.println(data);
-  webSocketServer.sendData(data);
-  
-  
-  switch (data.charAt(0)) {
-    case 't':
-      timeStart = millis();
-      timeLimit = (atoi(data.substring(1).c_str())) * 1000;
-      initialising = true;
-      u8x8.setCursor(0, 5);
-      u8x8.print(data.c_str());
-      break;
+  u8x8.print(message);
+
+
+  Serial.println(message);
+
+  if (sizeof(message) > 0 && message[0] == 't') {
+
+    timeStart = millis();
+    timeLimit = (atoi(message+1)) * 1000;
+    initialising = true;
+    Serial.printf("Time limit: %u\n", timeLimit);
   }
 
 
@@ -152,18 +187,18 @@ void processMessage(String data) {
 
 void processInputs() {
   if (initialising || playing) {
-    webSocketServer.sendData(digitalRead(DEFUSE_PIN_SWITCH) == HIGH ? "c:s1:on" : "c:s1:off");
+    webSocket.broadcastTXT(digitalRead(DEFUSE_PIN_SWITCH) == HIGH ? "c:s1:on" : "c:s1:off");
 
     char output[40];
     sprintf(output, "c:t1:%d", analogRead(DEFUSE_PIN_TRIMPOT));
-    webSocketServer.sendData(output);
+    webSocket.broadcastTXT(output);
 
     memset(output, 0, sizeof output);
     sprintf(output, "c:t2:%d", analogRead(DEFUSE_PIN_TRACER));
-    webSocketServer.sendData(output);
+    webSocket.broadcastTXT(output);
   }
   if (initialising) {
-    webSocketServer.sendData("x:0");
+    webSocket.broadcastTXT("x:0");
     initialising = false;
     playing = true;
     timeStart = millis();
@@ -172,39 +207,10 @@ void processInputs() {
  
 
 void loop() {
-  WiFiClient client = server.available();
- 
-  if (client.connected() && webSocketServer.handshake(client)) {
- 
-    String data;      
- 
-    while (client.connected()) {
-      u8x8.setCursor(0, 4);
-      u8x8.print("Connected    ");
-
-      data = webSocketServer.getData();
- 
-      if (data.length() > 0) {
-        processMessage(data.c_str());
-      }
- 
-      
-      delay(10); // Delay needed for receiving the data correctly
-      updatePixels();
-      processInputs();
-      Blynk.run();
-    }
-
- 
-  }
-
-  Serial.println("The client disconnected");
-  u8x8.setCursor(0, 4);
-  u8x8.print("Not connected");
-  Serial.println(WiFi.localIP());    
- 
+  webSocket.loop();
+  updatePixels();
+  processInputs();
   Blynk.run();
-  
-  delay(100);
+  timer.run();
 }
 

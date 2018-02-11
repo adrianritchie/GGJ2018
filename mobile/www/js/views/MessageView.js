@@ -13,7 +13,7 @@ var MessageView = function() {
 
     this.initialize = function() {
         this.$el = $('<div/>');
-        app.$ws.addEventListener('message', this.messageReceived.bind(this), false);
+        app.$ws.onmessage = this.messageReceived.bind(this);
     };
   
     this.render = function() {

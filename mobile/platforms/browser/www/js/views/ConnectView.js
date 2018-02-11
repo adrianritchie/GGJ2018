@@ -4,7 +4,6 @@ var ConnectView = function() {
         this.$el = $('<div/>');
 
         app.$ws = new WebSocket("ws://"+$("#device-address").val());
-        
         app.$ws.addEventListener('open', this.wsConnected);
         app.$ws.addEventListener('close', this.wsDisconnected);
     };
