@@ -3,6 +3,7 @@
 #include <WebSocketServer.h>
 #include <U8x8lib.h>
 #include <Adafruit_NeoPixel.h>
+#include <BlynkSimpleEsp32.h>
  
 #define NEOPIXEL_DATA_PIN 18
 #define NEOPIXEL_NUM_LEDS 60
@@ -14,9 +15,14 @@
 #define DEFUSE_PIN_TRACER   27
 
 
+
 WiFiServer server(80);
 WebSocketServer webSocketServer;
  
+const char auth[] = "091b2133b443485dbb2e71686f361c6d";
+
+WidgetLCD lcd(V0);
+
 const char *ssid = "gringod-wifi";
 const char *password = "helloworldthisismyworld";
  
@@ -52,19 +58,26 @@ void setup() {
   }
   Serial.println(WiFi.localIP());
  
-  if (!MDNS.begin("da_bomb")) {
-      Serial.println("Error setting up MDNS responder!");
-      while(1){
-          delay(1000);
-      }
-  }
+    if (!MDNS.begin("esp32")) {
+        Serial.println("Error setting up MDNS responder!");
+        while(1) {
+            delay(1000);
+        }
+    }
+    Serial.println("mDNS responder started");
 
+// Setup Blynk
+  Blynk.config(auth);
+  while (Blynk.connect() == false) {
+  }
+  lcd.print(0, 0, "IP Address:");
+  lcd.print(0, 1, WiFi.localIP().toString());
 
   server.begin();
   delay(100);
 
-  // Add service to MDNS-SD
-  MDNS.addService("http", "tcp", 80);
+    // Add service to MDNS-SD
+    MDNS.addService("http", "tcp", 80);
 
   u8x8.begin();
   u8x8.setFont(u8x8_font_chroma48medium8_r);
@@ -179,6 +192,7 @@ void loop() {
       delay(10); // Delay needed for receiving the data correctly
       updatePixels();
       processInputs();
+      Blynk.run();
     }
 
  
@@ -189,6 +203,8 @@ void loop() {
   u8x8.print("Not connected");
   Serial.println(WiFi.localIP());    
  
+  Blynk.run();
+  
   delay(100);
 }
 

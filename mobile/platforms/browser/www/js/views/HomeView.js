@@ -9,7 +9,9 @@ var HomeView = function(ws) {
         return this;
     };
 
-    this.start = function() {};
+    this.start = function() {
+        debugger;
+    };
 
     this.messageReceived = function() {
     };
