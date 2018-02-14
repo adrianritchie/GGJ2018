@@ -25,7 +25,7 @@ WidgetLCD lcd(V0);
 
 Preferences preferences;
 
-U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
+U8X8_SSD1306_128X64_NONAME_SW_I2C oled(/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NEOPIXEL_NUM_LEDS, NEOPIXEL_DATA_PIN, NEO_GRB + NEO_KHZ800);
 int delayval = 10; // delay for half a second
@@ -96,22 +96,22 @@ void setup() {
   Serial.begin(9600);
   delay(4000);
 
-  u8x8.begin();
-  u8x8.setFont(u8x8_font_chroma48medium8_r);
+  oled.begin();
+  oled.setFont(u8x8_font_chroma48medium8_r);
  
   preferences.begin("bomb-squad", false);
 
   if(preferences.getBool("wifi-set", false)) {
     WiFi.begin(preferences.getString("wifi-ssid").c_str(), 
                preferences.getString("wifi-psk").c_str());
-    u8x8.setCursor(0,0);
-    u8x8.print("WiFi connecting");
+    oled.setCursor(0,0);
+    oled.print("WiFi connecting");
   }
   else {
     Serial.println("SmartConfig starting");
 
-    u8x8.setCursor(0,0);
-    u8x8.print("WiFi SmartConfig");
+    oled.setCursor(0,0);
+    oled.print("WiFi SmartConfig");
 
     WiFi.mode(WIFI_AP);
     WiFi.beginSmartConfig();
@@ -154,9 +154,9 @@ void setup() {
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
 
-  u8x8.clearLine(0);
-  u8x8.setCursor(0, 0);
-  u8x8.print(WiFi.localIP());
+  oled.clearLine(0);
+  oled.setCursor(0, 0);
+  oled.print(WiFi.localIP());
 
   pixels.begin(); // This initializes the NeoPixel library.
   pixels.setBrightness(50);
@@ -202,8 +202,8 @@ void updatePixels() {
 }
 
 void processMessage(char * message) {
-  u8x8.setCursor(0, 2);
-  u8x8.print(message);
+  oled.setCursor(0, 2);
+  oled.print(message);
 
 
   Serial.println(message);
@@ -217,9 +217,9 @@ void processMessage(char * message) {
   }
 
 
-  u8x8.setCursor(0, 7);
-  u8x8.print("Messages: ");
-  u8x8.print(++messagesReceived);
+  oled.setCursor(0, 7);
+  oled.print("Messages: ");
+  oled.print(++messagesReceived);
 }
 
 void processInputs() {
