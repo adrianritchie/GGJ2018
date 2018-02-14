@@ -3,6 +3,7 @@
 #include <U8x8lib.h>
 #include <Adafruit_NeoPixel.h>
 #include <BlynkSimpleEsp32.h>
+#include <Preferences.h>
 
  
 #define NEOPIXEL_DATA_PIN 18
@@ -22,9 +23,7 @@ const char auth[] = "091b2133b443485dbb2e71686f361c6d";
 
 WidgetLCD lcd(V0);
 
-const char *ssid = "gringod-wifi";
-const char *password = "helloworldthisismyworld";
- 
+Preferences preferences;
 
 U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
 
@@ -95,13 +94,54 @@ void setup() {
   pinMode(DEFUSE_PIN_TRACER, INPUT);
 
   Serial.begin(9600);
- 
-  WiFi.begin(ssid, password);
+  delay(4000);
 
+  u8x8.begin();
+  u8x8.setFont(u8x8_font_chroma48medium8_r);
+ 
+  preferences.begin("bomb-squad", false);
+
+  if(preferences.getBool("wifi-set", false)) {
+    WiFi.begin(preferences.getString("wifi-ssid").c_str(), 
+               preferences.getString("wifi-psk").c_str());
+    u8x8.setCursor(0,0);
+    u8x8.print("WiFi connecting");
+  }
+  else {
+    Serial.println("SmartConfig starting");
+
+    u8x8.setCursor(0,0);
+    u8x8.print("WiFi SmartConfig");
+
+    WiFi.mode(WIFI_AP);
+    WiFi.beginSmartConfig();
+    while(!WiFi.smartConfigDone()) {
+      Serial.print('.');
+      delay(250);
+    }
+
+  }
+  Serial.println("");
+  Serial.println("WiFi SmartConfig complete.");
+
+
+  uint64_t wifi_end =  millis() + 5000;
   while (!WiFi.isConnected()) {
+    if (millis() > wifi_end) {
+      preferences.putBool("wifi-set", false);
+      preferences.end();
+      ESP.restart();
+    }
+
     Serial.print('.');
     delay(100);
   }
+
+  preferences.putBool("wifi-set", true);
+  preferences.putString("wifi-ssid", WiFi.SSID());
+  preferences.putString("wifi-psk", WiFi.psk());
+  preferences.end();
+
   Serial.println(WiFi.localIP());
  
   // Setup Blynk
@@ -114,10 +154,7 @@ void setup() {
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
 
-
-  u8x8.begin();
-  u8x8.setFont(u8x8_font_chroma48medium8_r);
-
+  u8x8.clearLine(0);
   u8x8.setCursor(0, 0);
   u8x8.print(WiFi.localIP());
 
