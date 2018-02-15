@@ -31,6 +31,9 @@
     "cordova-plugin-dialogs": {
       "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
     },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
+    },
     "cordova-plugin-geolocation": {
       "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
     },
@@ -39,17 +42,7 @@
     },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
-    },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
-    },
-    "cordova-plugin-zeroconf": {
-      "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
     }
   },
-  "dependent_plugins": {
-    "cordova-plugin-add-swift-support": {
-      "PACKAGE_NAME": "gg.kodo.ggj2018mobile"
-    }
-  }
+  "dependent_plugins": {}
 }

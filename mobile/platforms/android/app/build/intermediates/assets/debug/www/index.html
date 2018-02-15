@@ -27,6 +27,16 @@
 
     <script id="home-tpl" type="text/template">
         <h1>Call the Bomb Squad!</h1>
+        <p>
+            <input id="device-address" type="text" />
+        </p>
+        <p class="event continue">
+            <a href="#connect">Connect &rarr;</a>
+        </p>
+    </script>
+
+    <script id="connect-tpl" type="text/template">
+        <h1>Call the Bomb Squad!</h1>
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">
@@ -68,7 +78,7 @@
         </p>
         <h1>Game Over!</h1>
         <p class="event continue">
-            <a id="restart" href="#">Try again &rarr;</a>
+            <a id="restart" href="">Try again &rarr;</a>
         </p>
     </script>
 
@@ -80,6 +90,7 @@
     <script type="text/javascript" src="lib/handlebars.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/views/HomeView.js"></script>
+    <script type="text/javascript" src="js/views/ConnectView.js"></script>
     <script type="text/javascript" src="js/views/StartView.js"></script>
     <script type="text/javascript" src="js/views/MessageView.js"></script>
     <script type="text/javascript" src="js/views/GameOverView.js"></script>

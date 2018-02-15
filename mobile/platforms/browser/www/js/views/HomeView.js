@@ -10,9 +10,9 @@ var HomeView = function() {
     };
 
     this.start = function() {
-    };
-
-    this.messageReceived = function() {
+        if (!!app.ipAddress) {
+            $('#device-address').text(app.ipAddress);
+        }
     };
   
     this.initialize();

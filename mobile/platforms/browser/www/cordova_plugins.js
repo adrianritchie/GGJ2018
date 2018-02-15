@@ -199,51 +199,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
-        "id": "cordova-plugin-globalization.GlobalizationError",
-        "pluginId": "cordova-plugin-globalization",
-        "clobbers": [
-            "window.GlobalizationError"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-globalization/www/globalization.js",
-        "id": "cordova-plugin-globalization.globalization",
-        "pluginId": "cordova-plugin-globalization",
-        "clobbers": [
-            "navigator.globalization"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-globalization/www/browser/moment.js",
-        "id": "cordova-plugin-globalization.moment",
-        "pluginId": "cordova-plugin-globalization",
-        "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-globalization/src/browser/GlobalizationProxy.js",
-        "id": "cordova-plugin-globalization.GlobalizationProxy",
-        "pluginId": "cordova-plugin-globalization",
-        "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-        "id": "cordova-plugin-inappbrowser.inappbrowser",
-        "pluginId": "cordova-plugin-inappbrowser",
-        "clobbers": [
-            "cordova.InAppBrowser.open",
-            "window.open"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-inappbrowser/src/browser/InAppBrowserProxy.js",
-        "id": "cordova-plugin-inappbrowser.InAppBrowserProxy",
-        "pluginId": "cordova-plugin-inappbrowser",
-        "merges": [
-            ""
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
         "id": "cordova-plugin-file.DirectoryEntry",
         "pluginId": "cordova-plugin-file",
@@ -421,6 +376,51 @@ module.exports = [
         "merges": [
             "window.FileSystem"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
+        "id": "cordova-plugin-globalization.GlobalizationError",
+        "pluginId": "cordova-plugin-globalization",
+        "clobbers": [
+            "window.GlobalizationError"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-globalization/www/globalization.js",
+        "id": "cordova-plugin-globalization.globalization",
+        "pluginId": "cordova-plugin-globalization",
+        "clobbers": [
+            "navigator.globalization"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-globalization/www/browser/moment.js",
+        "id": "cordova-plugin-globalization.moment",
+        "pluginId": "cordova-plugin-globalization",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-globalization/src/browser/GlobalizationProxy.js",
+        "id": "cordova-plugin-globalization.GlobalizationProxy",
+        "pluginId": "cordova-plugin-globalization",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/src/browser/InAppBrowserProxy.js",
+        "id": "cordova-plugin-inappbrowser.InAppBrowserProxy",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "merges": [
+            ""
+        ]
     }
 ];
 module.exports.metadata = 
@@ -434,12 +434,10 @@ module.exports.metadata =
     "cordova-plugin-device-motion": "1.2.5",
     "cordova-plugin-device-orientation": "1.0.7",
     "cordova-plugin-dialogs": "1.2.1",
+    "cordova-plugin-file": "6.0.1",
     "cordova-plugin-geolocation": "2.1.0",
     "cordova-plugin-globalization": "1.0.9",
-    "cordova-plugin-inappbrowser": "1.3.0",
-    "cordova-plugin-file": "6.0.1",
-    "cordova-plugin-add-swift-support": "1.7.1",
-    "cordova-plugin-zeroconf": "1.3.1"
+    "cordova-plugin-inappbrowser": "1.3.0"
 }
 // BOTTOM OF METADATA
 });
