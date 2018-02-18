@@ -39,6 +39,11 @@ var MessageView = function() {
     this.start = function() {
 
         $("#go-again").unbind("click").bind("click", this.start.bind(this) );
+
+        this.state.errors = 0;
+        $('[id^="life"]').show();
+        $('[id^="dead"]').hide();
+        
         this.sendInstructions();
     };
 
@@ -87,7 +92,7 @@ var MessageView = function() {
                 }
                 else if (value != this.state.initial[control]) {
                     $('#errors').text(++this.state.errors);
-            
+                    this.updateLives();
                 }
             }
         }
@@ -97,10 +102,23 @@ var MessageView = function() {
         }
 
         if (msg.data == "r:0" && !this.state.completed) {
+            this.state.completed = true;
             router.load('gameover');
             console.log('gameover');
         }
     };
   
+    this.updateLives = function() {
+        $("#life_"+this.state.errors).hide();
+        $("#dead_"+this.state.errors).show();
+
+        if (this.state.errors == 3) {
+            app.$ws.send('f:0');
+            this.state.completed = true;
+            router.load('gameover');
+            console.log('gameover');
+        }
+    };
+
     this.initialize();
 };

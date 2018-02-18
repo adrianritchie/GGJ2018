@@ -22,6 +22,12 @@ def bomb_in_progress(time_limit):
 		if remaining < 0:
 			remaining = 0
 		
+		if 7000 <= remaining <= 7050:
+			server.send_message_to_all('c:t1:1')
+
+		if 6000 <= remaining <= 6050:
+			server.send_message_to_all('c:t1:1')
+
 		if 5000 <= remaining <= 5100:
 			server.send_message_to_all('c:s1:off')
 
@@ -56,7 +62,6 @@ def new_message_received(client, server, message):
 			print('waiting for thread')
 		t = Thread(target=bomb_in_progress, args=(int(message[1:]),))
 		t.start()
-
 
 running = False
 t = Thread(target=bomb_in_progress, args=(0,))

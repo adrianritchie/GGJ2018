@@ -165,7 +165,7 @@ void setup() {
   timer.setInterval(5000L, timerEvent);
 }
 
-void updatePixels() { 
+void updateProgress() { 
 	// For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
   
   if (playing) {
@@ -198,6 +198,7 @@ void updatePixels() {
   delay(1);
   portDISABLE_INTERRUPTS();
   pixels.show(); // This sends the updated pixel color to the hardware.
+  delay(2);
   portENABLE_INTERRUPTS();
 }
 
@@ -205,15 +206,21 @@ void processMessage(char * message) {
   oled.setCursor(0, 2);
   oled.print(message);
 
-
   Serial.println(message);
 
-  if (sizeof(message) > 0 && message[0] == 't') {
-
-    timeStart = millis();
-    timeLimit = (atoi(message+1)) * 1000;
-    initialising = true;
-    Serial.printf("Time limit: %u\n", timeLimit);
+  if (sizeof(message) > 0) {
+    if (message[0] == 't') {
+      timeStart = millis();
+      timeLimit = (atoi(message+1)) * 1000;
+      initialising = true;
+      Serial.printf("Time limit: %u\n", timeLimit);
+    }
+    if (message == "f:1") {
+      playing = false;
+    }
+    if (message == "f:0") {
+      playing = false;
+    }
   }
 
 
@@ -245,7 +252,7 @@ void processInputs() {
 
 void loop() {
   webSocket.loop();
-  updatePixels();
+  updateProgress();
   processInputs();
   Blynk.run();
   timer.run();
