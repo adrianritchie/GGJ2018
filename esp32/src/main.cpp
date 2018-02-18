@@ -141,7 +141,7 @@ void setup() {
   preferences.putString("wifi-ssid", WiFi.SSID());
   preferences.putString("wifi-psk", WiFi.psk());
   preferences.end();
-
+  
   Serial.println(WiFi.localIP());
  
   // Setup Blynk

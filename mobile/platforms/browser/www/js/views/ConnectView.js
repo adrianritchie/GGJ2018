@@ -6,6 +6,8 @@ var ConnectView = function() {
         app.$ws = new WebSocket("ws://"+$("#device-address").val());
         app.$ws.addEventListener('open', this.wsConnected);
         app.$ws.addEventListener('close', this.wsDisconnected);
+
+        app.level = 10;
     };
 
     this.start = function() {};

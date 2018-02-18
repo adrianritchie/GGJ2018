@@ -4,7 +4,7 @@
         "PLATFORMIO_CALLER": "vscode"
     },
     "terminal.integrated.env.linux": {
-        "PATH": "/home/adrianritchie/.platformio/penv/bin:/home/adrianritchie/.platformio/penv:/home/adrianritchie/bin:/home/adrianritchie/.local/bin:/home/adrianritchie/bin:/home/adrianritchie/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/usr/local/android-sdk-linux/:/usr/local/android-sdk-linux/tools:/usr/local/android-sdk-linux/platform-tools:/usr/local/android-sdk-linux/build-tools",
+        "PATH": "/home/adrianritchie/.platformio/penv/bin:/home/adrianritchie/.platformio/penv:/home/adrianritchie/bin:/home/adrianritchie/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin",
         "PLATFORMIO_CALLER": "vscode"
     },
     "files.associations": {

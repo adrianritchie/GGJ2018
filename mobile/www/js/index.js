@@ -1,5 +1,6 @@
 
 var app = {
+    level: 10,
 
     // Application Constructor
     initialize: function() {
@@ -8,9 +9,6 @@ var app = {
         StartView.prototype.template = Handlebars.compile($('#start-tpl').html());
         MessageView.prototype.template = Handlebars.compile($("#message-tpl").html());
         GameOverView.prototype.template = Handlebars.compile($("#gameover-tpl").html());
-
-        
-        
 
         router.addRoute('', function() { app.showView(new HomeView()); });
         router.addRoute('connect', function() { app.showView(new ConnectView()); });

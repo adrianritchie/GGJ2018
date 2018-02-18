@@ -20,6 +20,7 @@ var GameOverView = function(ws) {
             router.load('');
         }
         else {
+            app.level++;
             router.load('start');
         }
     }

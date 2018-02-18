@@ -47,7 +47,7 @@ var MessageView = function() {
         if (app.$ws.readyState != 1) {
             router.load('');
         }
-        var message = 't'+Math.round(Math.random()*10);
+        var message = 't'+app.level;
         console.log(message);
 
         app.$ws.send(message);
@@ -80,12 +80,15 @@ var MessageView = function() {
                     }
                 }
             }
-            else if (control == this.state.control && value == this.state.required) {
-                this.state.completed = true;
-            }
-            else if (value != this.state.initial[control]) {
-                $('#errors').text(++this.state.errors);
-        
+            else if (!this.state.completed) {
+                 if (control == this.state.control && value == this.state.required) {
+                    this.state.completed = true;
+                    app.$ws.send('f:1');
+                }
+                else if (value != this.state.initial[control]) {
+                    $('#errors').text(++this.state.errors);
+            
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 
 var app = {
+    level: 10,
 
     // Application Constructor
     initialize: function() {
@@ -8,9 +9,6 @@ var app = {
         StartView.prototype.template = Handlebars.compile($('#start-tpl').html());
         MessageView.prototype.template = Handlebars.compile($("#message-tpl").html());
         GameOverView.prototype.template = Handlebars.compile($("#gameover-tpl").html());
-
-        
-        
 
         router.addRoute('', function() { app.showView(new HomeView()); });
         router.addRoute('connect', function() { app.showView(new ConnectView()); });
@@ -38,16 +36,6 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        cordova.plugins.zeroconf.watch('', 'local.');
         router.load('');      
-    },
-    ondevicelist : function(devices) {
-        devices.forEach(function(device) {
-            if( !!device.name && device.name.length > 5 &&
-                 device.name.substr(0, 5) == "bomb-" && device.name != "bomb-offline") {
-                app.ipAddress = device.name.substr(5);
-            }
-            console.log(device.name);
-        });
     }
 };
