@@ -1,4 +1,4 @@
-var GameOverView = function(ws) {
+var DefusedView = function() {
 
     this.initialize = function() {
         this.$el = $('<div/>');
@@ -10,21 +10,18 @@ var GameOverView = function(ws) {
     };
 
     this.start = function() {
-        $('.app').addClass('gameover');
-        $('.continue').off('click', '#restart');
-        $('.continue').on("click", '#restart', this.restart );
+        $('.continue').off('click', '#nextLevel');
+        $('.continue').on("click", '#nextLevel', this.nextLevel );
     };
 
-    this.restart = function(eventObject) {
-
-        $('.app').removeClass('gameover');
+    this.nextLevel = function(eventObject) {
         eventObject.preventDefault();
         if (app.$ws.readyState != 1) {
             router.load('');
         }
         else {
-            app.level++;
-            router.load('start');
+            app.level--;
+            router.load('message');
         }
     }
 

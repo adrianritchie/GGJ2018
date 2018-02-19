@@ -7,8 +7,8 @@ var MessageView = function() {
         required : undefined,
         initialising : false,
         completed : false,
-        errors : 0,
-        messages : 0
+        lives : 3,
+        difficulty : 1
     };
 
     this.initialize = function() {
@@ -40,9 +40,27 @@ var MessageView = function() {
 
         $("#go-again").unbind("click").bind("click", this.start.bind(this) );
 
-        this.state.errors = 0;
+        this.state.lives = 3;
         $('[id^="life"]').show();
         $('[id^="dead"]').hide();
+
+        switch(Math.floor(Math.random() * 3)) {
+            case 0:
+                this.state.control = 's1';
+                this.state.difficulty = 1;
+                break;
+            case 1:
+                this.state.control = 'k1';
+                this.state.difficulty = 1.5;
+                break;
+            case 2:
+                this.state.control = 't1';
+                this.state.difficulty = 4;
+                break;
+        }
+
+        $("[id^='trigger-']").hide();
+        $("#trigger-"+this.state.control).show();
         
         this.sendInstructions();
     };
@@ -52,7 +70,7 @@ var MessageView = function() {
         if (app.$ws.readyState != 1) {
             router.load('');
         }
-        var message = 't'+app.level;
+        var message = 't'+Math.floor(app.level * this.state.difficulty);
         console.log(message);
 
         app.$ws.send(message);
@@ -62,7 +80,6 @@ var MessageView = function() {
 
     this.messageReceived = function(msg) {
         console.log(msg.data);
-        $('#messages').text(++this.state.messages);
 
         if (msg.data.startsWith("r")) {
             var remaining = msg.data.substr(2);
@@ -75,25 +92,10 @@ var MessageView = function() {
             var value = msg.data.substr(5);
 
             if (this.state.initialising) {
-                this.state.initial[control] = value;
-
-                if (control == this.state.control) {
-                    switch (control) {
-                        case 's1':
-                            this.state.required = value == 'on' ? 'off' : 'on';
-                            break;
-                    }
-                }
+                this.initializeControl(control, value);
             }
             else if (!this.state.completed) {
-                 if (control == this.state.control && value == this.state.required) {
-                    this.state.completed = true;
-                    app.$ws.send('f:1');
-                }
-                else if (value != this.state.initial[control]) {
-                    $('#errors').text(++this.state.errors);
-                    this.updateLives();
-                }
+                 this.checkControl(control, value);
             }
         }
 
@@ -102,23 +104,97 @@ var MessageView = function() {
         }
 
         if (msg.data == "r:0" && !this.state.completed) {
+            this.gameOver();
+        }
+    };
+
+    this.initializeControl = function(control, value) {
+        this.state.initial[control] = value;
+
+        if (control == this.state.control) {
+            switch (control) {
+                case 's1':
+                    this.state.required = value == 'on' ? 'off' : 'on';
+                    break;
+                case 'k1':
+                    this.state.required = "A385*";
+                    break;
+                case 't1':
+                    this.state.require = value == 1 ? 2 : 1;
+            }
+        }
+    };
+
+    this.checkControl = function(control, value) {
+        if (control == this.state.control) {
+            switch (control) {
+                case 's1':
+                    this.state.completed = (value == this.state.required);
+                    break;
+                case 'k1':
+                    this.checkKeypadEntry(value);
+                    break;
+                case 't1':
+                    this.checkTracer(value);
+                    break;
+            }
+
+            if (this.state.completed) {
+                app.$ws.send('f:1');
+                router.load('defused');
+            }
+        }
+        else if (value != this.state.initial[control]) {
+            this.reduceLives();
+        }
+    };
+
+    this.checkTracer = function(value) {
+        if (value == 0) {
+            return;
+        }
+        if (value == this.state.required) {
             this.state.completed = true;
-            router.load('gameover');
-            console.log('gameover');
+        }
+        else {
+            this.reduceLives();
+        }
+    }
+
+    this.checkKeypadEntry = function(value) {
+        if (value == '') {
+            return;
+        }
+        if (value == this.state.required.charAt(0)) {
+            if (this.state.require.length == 1) {
+                this.state.completed = true;
+            } 
+            else {
+                this.state.required = this.state.required.substr(1);
+            }
+        }
+        else {
+            this.reduceLives();
         }
     };
   
-    this.updateLives = function() {
-        $("#life_"+this.state.errors).hide();
-        $("#dead_"+this.state.errors).show();
+    this.reduceLives = function() {
+        $("#life_"+this.state.lives).hide();
+        $("#dead_"+this.state.lives).show();
 
-        if (this.state.errors == 3) {
-            app.$ws.send('f:0');
-            this.state.completed = true;
-            router.load('gameover');
-            console.log('gameover');
+        this.state.lives--;
+
+        if (this.state.lives == 0) {
+            this.gameOver();
         }
     };
+
+    this.gameOver = function() {
+        app.$ws.send('f:0');
+        this.state.completed = true;
+        router.load('gameover');
+        console.log('gameover');
+    }
 
     this.initialize();
 };

@@ -59,6 +59,10 @@ body {
                                    /* offset horizontal: half of text area width */
 }
 
+.gameover {
+    background-image: none !important;
+}
+
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {
@@ -108,6 +112,10 @@ h1 {
 
 img.explosion {
     margin: -100% -50% 0 -50%;
+}
+
+.triggerHidden {
+    display: none;
 }
 
 @keyframes fade {

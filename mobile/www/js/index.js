@@ -8,12 +8,14 @@ var app = {
         ConnectView.prototype.template = Handlebars.compile($('#connect-tpl').html());
         StartView.prototype.template = Handlebars.compile($('#start-tpl').html());
         MessageView.prototype.template = Handlebars.compile($("#message-tpl").html());
+        DefusedView.prototype.template = Handlebars.compile($("#defused-tpl").html());
         GameOverView.prototype.template = Handlebars.compile($("#gameover-tpl").html());
 
         router.addRoute('', function() { app.showView(new HomeView()); });
         router.addRoute('connect', function() { app.showView(new ConnectView()); });
         router.addRoute('start', function() { app.showView(new StartView()); });
         router.addRoute('message', function() { app.showView(new MessageView()); });
+        router.addRoute('defused', function() { app.showView(new DefusedView()); });
         router.addRoute('gameover', function() { app.showView(new GameOverView()); });
         router.start();
 
