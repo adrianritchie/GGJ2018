@@ -28,7 +28,7 @@
     <script id="home-tpl" type="text/template">
         <h1>Call the Bomb Squad!</h1>
         <p>
-            <input id="device-address" type="text" value="localhost:8080" />
+            <input id="device-address" type="text" value="" />
         </p>
         <p class="event continue">
             <a href="#connect">Connect &rarr;</a>
@@ -57,9 +57,9 @@
 
     <script id="message-tpl" type="text/template">
         <h1>Incoming message:</h1>
-        <p>
-            You need to toggle the blue switch!
-        </p>
+        <p id="trigger-s1" class="triggerHidden">You need to toggle the blue switch!</p>
+        <p id="trigger-k1" class="triggerHidden">You need to enter the code "<em id="keypadCode">A73D#</em>" in the keypad!</p>
+        <p id="trigger-t1" class="triggerHidden">You need to get the red handle to the green terminal without touching the wire inbetween!</p>
         <div style="width: 216px; height: 126px; position: relative; background: transparent url(img/plexiglas.png) no-repeat top left">
             <div style="position: absolute; left: 38px; top: 33px; width: 120px; height: 34px">
               <canvas id="display" width="120" height="34"></canvas>
@@ -75,6 +75,15 @@
         </div>
         <p class="event continue">
             <a id="go-again">Restart</a>
+        </p>
+    </script>
+
+    <script id="defused-tpl" type="text/template">
+        <h1>Well done!</h1>
+        <p>You successfully managed to defuse the trigger without causing it to explode.</p>
+        <p>Unfortunately, we've discover it has another trigger that you will need to defuse in order to save yourself!</p>
+        <p class="event continue">
+            <a id="nextLevel" href="">Next level &rarr;</a>
         </p>
     </script>
 
@@ -99,6 +108,7 @@
     <script type="text/javascript" src="js/views/ConnectView.js"></script>
     <script type="text/javascript" src="js/views/StartView.js"></script>
     <script type="text/javascript" src="js/views/MessageView.js"></script>
+    <script type="text/javascript" src="js/views/DefusedView.js"></script>
     <script type="text/javascript" src="js/views/GameOverView.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">

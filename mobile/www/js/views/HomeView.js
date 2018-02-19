@@ -10,9 +10,10 @@ var HomeView = function() {
     };
 
     this.start = function() {
-        if (!!app.ipAddress) {
-            $('#device-address').text(app.ipAddress);
-        }
+        $.getJSON("http://blynk-cloud.com/091b2133b443485dbb2e71686f361c6d/get/V0", function(data) {
+            console.log(data);
+            $('#device-address').val(data[3]);
+        });
     };
   
     this.initialize();
