@@ -1,6 +1,7 @@
 import logging
 import random
 import time
+import requests
 from threading import Thread
 from websocket_server import WebsocketServer
 
@@ -28,7 +29,7 @@ def bomb_in_progress(time_limit):
 		if 6000 <= remaining <= 6050:
 			server.send_message_to_all('c:t1:1')
 
-		if 5000 <= remaining <= 5100:
+		if 5000 <= remaining <= 5050:
 			server.send_message_to_all('c:s1:off')
 
 		server.send_message_to_all('r:'+str(remaining))
@@ -66,6 +67,8 @@ def new_message_received(client, server, message):
 running = False
 t = Thread(target=bomb_in_progress, args=(0,))
 
+payload = ["p","0","1","localhost:8080"]
+requests.put("http://blynk-cloud.com/091b2133b443485dbb2e71686f361c6d/update/V0", json=payload )
 
 server = WebsocketServer(8080, host='127.0.0.1', loglevel=logging.INFO)
 server.set_fn_new_client(new_client)
