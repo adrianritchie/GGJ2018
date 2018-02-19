@@ -13,7 +13,7 @@ def bomb_in_progress(time_limit):
 	print('running thread')
 	end_time = current_milli_time() + (time_limit *1000)
 	random.seed(end_time)
-	server.send_message_to_all('c:s1:on')
+	server.send_message_to_all('c:s1:1')
 	server.send_message_to_all('c:t1:0')
 	server.send_message_to_all('c:t2:0')
 	server.send_message_to_all('c:k1:0')
@@ -22,15 +22,15 @@ def bomb_in_progress(time_limit):
 		remaining = end_time - current_milli_time()
 		if remaining < 0:
 			remaining = 0
-		
-		if 7000 <= remaining <= 7050:
-			server.send_message_to_all('c:t1:1')
 
-		if 6000 <= remaining <= 6050:
-			server.send_message_to_all('c:t1:1')
+		if random.randint(0, 100) > 95:
+			server.send_message_to_all('c:t1:'+str(random.randint(0,2)))
 
-		if 5000 <= remaining <= 5050:
-			server.send_message_to_all('c:s1:off')
+		# if random.randint(0, 10) > 9:
+		# 	server.send_message_to_all('c:k1:'+str(random.randint(0,9)))
+
+		if random.randint(0, 100) > 95:
+			server.send_message_to_all('c:s1:'+str(random.randint(0,1)))
 
 		server.send_message_to_all('r:'+str(remaining))
 
