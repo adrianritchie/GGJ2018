@@ -114,7 +114,7 @@ var MessageView = function() {
         if (control == this.state.control) {
             switch (control) {
                 case 's1':
-                    this.state.required = value == 'on' ? 'off' : 'on';
+                    this.state.required = 1 - value;
                     break;
                 case 'k1':
                     this.state.required = "A385*";
