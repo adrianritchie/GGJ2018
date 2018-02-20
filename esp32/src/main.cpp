@@ -14,7 +14,15 @@
 #define DEFUSE_PIN_SWITCH   34
 #define DEFUSE_PIN_TRIMPOT  35
 #define DEFUSE_PIN_TRACER   27
+#define DEFUSE_PIN_KEYPAD   25
 
+struct Triggers {
+  uint8_t s1_switch;
+  uint16_t k1_keypad;
+  uint16_t t1_tracer;
+  uint16_t t2_trimpot;
+}
+oldTriggerStates = { .s1_switch = 0xFF, .k1_keypad = 0xFFFF, .t1_tracer = 0xFFFF, .t2_trimpot = 0xFFFF};
 
 
 WebSocketsServer webSocket = WebSocketsServer(80);
@@ -93,7 +101,7 @@ void setup() {
   pinMode(DEFUSE_PIN_TRIMPOT, INPUT);
   pinMode(DEFUSE_PIN_TRACER, INPUT);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   delay(4000);
 
   oled.begin();
@@ -216,9 +224,11 @@ void processMessage(char * message) {
       Serial.printf("Time limit: %u\n", timeLimit);
     }
     if (message == "f:1") {
+      //todo: something when user defuses bomb
       playing = false;
     }
     if (message == "f:0") {
+      //todo: something when user detonates bomb
       playing = false;
     }
   }
@@ -230,23 +240,51 @@ void processMessage(char * message) {
 }
 
 void processInputs() {
-  if (initialising || playing) {
-    webSocket.broadcastTXT(digitalRead(DEFUSE_PIN_SWITCH) == HIGH ? "c:s1:on" : "c:s1:off");
+  if (!initialising && !playing)
+    return;
 
-    char output[40];
-    sprintf(output, "c:t1:%d", analogRead(DEFUSE_PIN_TRIMPOT));
-    webSocket.broadcastTXT(output);
+  struct Triggers newTriggerStates;
+  newTriggerStates.k1_keypad = analogRead(DEFUSE_PIN_KEYPAD);;
+  newTriggerStates.s1_switch = digitalRead(DEFUSE_PIN_SWITCH);
+  newTriggerStates.t1_tracer = analogRead(DEFUSE_PIN_TRACER);
+  newTriggerStates.t2_trimpot = analogRead(DEFUSE_PIN_TRACER);
 
+  char output[40];
+  if (newTriggerStates.k1_keypad != oldTriggerStates.k1_keypad) {
+    //todo: replace with characters
+  Serial.printf("Keypad new:%d old:%d\n", newTriggerStates.k1_keypad, oldTriggerStates.k1_keypad);
+    webSocket.broadcastTXT( newTriggerStates.k1_keypad ? "c:k1:1" : "c:k1:0");
+  }
+
+  if (newTriggerStates.s1_switch != oldTriggerStates.s1_switch) {
+  Serial.printf("Switch new:%d old:%d\n", newTriggerStates.s1_switch, oldTriggerStates.s1_switch);
+    webSocket.broadcastTXT( newTriggerStates.k1_keypad ? "c:s1:1" : "c:s1:0");
+  }
+
+  if (newTriggerStates.t1_tracer != oldTriggerStates.t1_tracer) {
+  Serial.printf("Tracer new:%d old:%d\n", newTriggerStates.t1_tracer, oldTriggerStates.t1_tracer);
     memset(output, 0, sizeof output);
-    sprintf(output, "c:t2:%d", analogRead(DEFUSE_PIN_TRACER));
+    sprintf(output, "c:t1:%d", analogRead(DEFUSE_PIN_TRACER));
     webSocket.broadcastTXT(output);
   }
+
+  if (newTriggerStates.t2_trimpot != oldTriggerStates.t2_trimpot) {
+  Serial.printf("Trimpot new:%d old:%d\n", newTriggerStates.t2_trimpot, oldTriggerStates.t2_trimpot);
+    memset(output, 0, sizeof output);
+    sprintf(output, "c:t2:%d", analogRead(DEFUSE_PIN_TRIMPOT));
+    webSocket.broadcastTXT(output);
+  }
+
   if (initialising) {
     webSocket.broadcastTXT("x:0");
     initialising = false;
     playing = true;
     timeStart = millis();
+    Serial.println("Initialising complete.");
+    Serial.println();
   }
+
+  oldTriggerStates = newTriggerStates;
 }
  
 
